@@ -1,4 +1,4 @@
-import { useState, createContext, useContext } from 'react';
+import { useState, createContext, useContext, useMemo, useCallback } from 'react';
 
 // Create a Context
 export const ErrorContext = createContext();
@@ -7,11 +7,15 @@ export const ErrorContext = createContext();
 export const ErrorProvider = ({ children }) => {
   const [error, setError] = useState(null);
 
-  const handleError = (error) => {
+  const handleError = useCallback((error) => {
     setError(error);
-  };
+  }, []);
 
-  return <ErrorContext.Provider value={{ error, handleError }}>{children}</ErrorContext.Provider>;
+  return (
+    <ErrorContext.Provider value={useMemo(() => ({ error, handleError }), [error, handleError])}>
+      {children}
+    </ErrorContext.Provider>
+  );
 };
 
 // Create the HOC that uses the context

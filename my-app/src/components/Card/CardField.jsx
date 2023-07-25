@@ -20,7 +20,7 @@ const CARD_OPTIONS = {
   },
 };
 
-const CardField = ({ onChange, onError }) => {
+const CardField = ({ onChange }) => {
   return (
     <div className='FormRow'>
       <CardElement options={CARD_OPTIONS} onChange={onChange} />
